@@ -10,3 +10,7 @@ Der Service muss einfach in einer Cloud in Betrieb genommen werden können (read
 Die Konfigurationsdateien sind in einer Versionsverwaltung nachvollziehbar abgelegt.
 
 ## Erfüllungsgrad
+
+1. ## **Auswahl des Ticketsystems**
+Wir haben uns für osTicket entschieden.
+
