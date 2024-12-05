@@ -1,5 +1,8 @@
 # Dokumentation
 
+[toc]
+***
+
 ## Inbetriebnahme
 Der Service muss einfach in einer Cloud in Betrieb genommen werden können (readme).
 
