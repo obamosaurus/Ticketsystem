@@ -9,3 +9,4 @@ sudo apt install -y mysql-server
 # mysql Server starten 
 sudo systemctl start mysql
 sudo systemctl enable mysql
+
