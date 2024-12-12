@@ -28,5 +28,7 @@ mit mv in den gewüschten ordner scheiben, der durch apache installiert werden s
 mit chown wird der Besitzer gewechselt
 
 ## 5. Datenbank
-
+Als Datenbank haben wir mysql gewählt. Zuerst installieren wir mysql und starten den Server.
 ## 6. Webserver
+Wir haben Apache auf WSL installiert als Test und haben geprüft ob der Dienst am laufen ist.
+Der Dienst läuft. 
