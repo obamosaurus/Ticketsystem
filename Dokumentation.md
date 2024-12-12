@@ -28,3 +28,5 @@ mit mv in den gewüschten ordner scheiben, der durch apache installiert werden s
 mit chown wird der Besitzer gewechselt
 
 ## 5. Datenbank
+
+## 6. Webserver
