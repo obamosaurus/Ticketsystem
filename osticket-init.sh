@@ -21,3 +21,8 @@ rm -rf /tmp/osTicket
 # ZIP-Datei und Zone.Identifier aus Home löschen
 rm -f ~/osTicket-v1.18.1.zip
 rm -f ~/osTicket-v1.18.1.zip\:Zone.Identifier
+
+# config file vorbereiten
+cd /var/www/html/include/
+sudo cp ost-sampleconfig.php /var/www/html/include/ost-config.php
+sudo chmod 0666 ost-config.php
