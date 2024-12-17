@@ -6,7 +6,7 @@ sudo apt install -y unzip
 #unzip and move osTicket
 unzip osTicket-v1.18.1.zip
 mkdir -p /var/www/html/osTicket
-mv osTicket-v1.18.1 /var/www/html/
+sudo mv osTicket-v1.18.1 /var/www/html/
 
 #ChangeOwner to www-data
 chown -R www-data:www-data /var/www/html/
