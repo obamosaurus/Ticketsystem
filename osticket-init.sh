@@ -9,4 +9,5 @@ mkdir -p /var/www/html/osTicket
 sudo mv osTicket-v1.18.1 /var/www/html/
 
 #ChangeOwner to www-data
-chown -R www-data:www-data /var/www/html/
+sudo chown -R www-data:www-data /var/www/html/
+sudo chmod -R 777 /var/www.html/
