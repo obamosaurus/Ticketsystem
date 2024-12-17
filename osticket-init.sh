@@ -1,13 +1,23 @@
 #!/bin/bash
 
-#install unzip
 sudo apt install -y unzip
 
-#unzip and move osTicket
-unzip osTicket-v1.18.1.zip
-mkdir -p /var/www/html/osTicket
-sudo mv osTicket-v1.18.1 /var/www/html/
+# osTicket unzip nach /tmp/osTicket
+unzip osTicket-v1.18.1.zip -d /tmp/osTicket
 
-#ChangeOwner to www-data
+# index.html vom webserver löschen
+sudo rm -f /var/www/html/index.html
+
+# inhalt von ../uploads/ in webserver moven 
+sudo mv /tmp/osTicket/osTicket-v1.18.1/osTicket-v1.18.1/uploads/* /var/www/html/
+
+# Besitzer und Dateiberechtigungen anpassen
 sudo chown -R www-data:www-data /var/www/html/
-sudo chmod -R 777 /var/www.html/
+sudo chmod -R 755 /var/www/html/
+
+# tmp Dateien löschen
+rm -rf /tmp/osTicket
+
+# ZIP-Datei und Zone.Identifier aus Home löschen
+rm -f ~/osTicket-v1.18.1.zip
+rm -f ~/osTicket-v1.18.1.zip\:Zone.Identifier
