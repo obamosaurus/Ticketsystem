@@ -13,3 +13,6 @@ sudo systemctl enable apache2
 
 sudo apt-get install -y libapache2-mod-php
 sudo systemctl restart apache2.service
+
+# Installation benötigter services für osTicket
+sudo apt install -y php-mysql
