@@ -5,8 +5,8 @@
 2. [Auswahl des Ticketsystems](#1-auswahl-des-ticketsystems)
 3. [Server Auswahl](#2-Server Auswahl)
 4. [Scripts](#3-Scripts)
-5. [Test](#4-test)
-6. [Reflexion](#5-reflexion)
+5. [Vorgehen](#4-Vorgehen)
+6. [Testfälle](#5-Testfälle)
 
 ## 1. **Projektbeschreibung**
 Das Aufgabenstellung ist folgende:
@@ -40,10 +40,13 @@ Wir haben uns für diese Server entschieden, da diese die üblichsten sind und w
 ## 4. Scripts
 Wir haben uns im Team entschieden mehrere kleine Scripts zu erstellen und nicht ein grosses Script. Bei den einzelnen Scripts geht es nur um die Installation der einzelnen Server und Diensten. Die Idee dahinter ist, das wir so immer zum gleichen Setup kommen und das keine Fehler während der Installation auftauchen.
 
-Wir haben Apache auf WSL installiert als Test und haben geprüft ob der Dienst am laufen ist.
-Der Dienst läuft. 
 
-## 5. Testfälle
+## 5. Vorgehen
+Wir haben für jegliche Server und Dienste eine Init.sh Datei erstellt. Dazu haben wir zuerst die Scripts erstellt und mithilfe der erstellten Scripts die Dienste Lokal installiert. Wenn etwas da schon nicht geklappt hat haben wir es direkt im Script behoben. 
+Anfangs haben wir direkt noch das README erstellt. Dort werden wir genauer beaschreiben, wie die Scripts anzuwenden sind und was diese genau machen.
+Die Dokumenatation führen wir immer fortlaufend, das wir die Dokumentation immer Up-To-Date halten können.
+
+## 6. Testfälle
 
 
 ## 6. Reflexion
