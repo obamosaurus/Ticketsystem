@@ -9,7 +9,13 @@
 6. [Reflexion](#5-reflexion)
 
 ## 1. **Projektbeschreibung**
-Das Ziel des Projekt ist, dass wir
+Das Aufgabenstellung ist folgende:
+*Ausgangslage:*
+Die Fertigkeiten mit der Cloud prakitsch zeigen. Das Ganze können wir in einer selbstgewählten Dreiergruppe erledigen.
+*Ziele:*
+Es wurden vier Haupt ziele gesetzt. 1. Ein Service soll in der Cloud funktiontüchtig aufgesetzt werden. 2. Der Service soll als IaC (Infrastructure as Code) geestaltet sein. Die Konfigurationsdateien werden mit einer Versionsverwaltung verwaltet. 3. Die Dokumentation wir in Git via Markdown geschrieben. 4. Einzelne Testfälle sollen durchgespielt werden und mit Screenshots dokumentiert werden und in der Dokumnetation abgelegt werden.
+*Aufgabenstellung:* 
+Wir müssen ein Ticketsystem unserer Wahl installieren.
 
 ## 2. **Auswahl des Ticketsystems**
 Wir haben uns für osTicket entschieden.
@@ -37,6 +43,12 @@ Wir haben uns im Team entschieden mehrere kleine Scripts zu erstellen und nicht 
 Wir haben Apache auf WSL installiert als Test und haben geprüft ob der Dienst am laufen ist.
 Der Dienst läuft. 
 
-## 5. Test
+## 5. Testfälle
+
 
 ## 6. Reflexion
+Flavio:
+
+Tom:
+
+Daris:
