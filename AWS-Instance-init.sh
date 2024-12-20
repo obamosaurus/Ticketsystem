@@ -10,7 +10,7 @@ KEY_PATH="$HOME/.ssh/osTicketGroupTFD_key.pem"
  
 # Sicherheitsgruppe erstellen
 echo "Erstelle Security Group..."
-GROUP_ID=$(aws ec2 create-security-group --group-name osTicketGroupTFD_secGroup --description "EC2-Webserver-M364 sec-group" --query 'GroupId' --output text)
+GROUP_ID=$(aws ec2 create-security-group --group-name osTicketGroupTFD_secGroup --description "EC2-M364 sec-group" --query 'GroupId' --output text)
 echo "Security Group erstellt. Group ID: $GROUP_ID"
  
 # Sicherheitsregeln setzen
