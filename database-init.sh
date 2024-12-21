@@ -10,3 +10,6 @@ sudo apt install -y mysql-server
 sudo systemctl start mysql
 sudo systemctl enable mysql
 
+# mysql anmelden und database erstellen
+sudo mysql
+create database osTicketDB; 
