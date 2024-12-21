@@ -3,7 +3,7 @@
 sudo apt install -y unzip
 
 # osTicket unzip nach /tmp/osTicket
-unzip osTicket-v1.18.1.zip -d /tmp/osTicket
+unzip ~/Ticketsystem/osTicket-v1.18.1.zip -d /tmp/osTicket
 
 # index.html vom webserver löschen
 sudo rm -f /var/www/html/index.html
