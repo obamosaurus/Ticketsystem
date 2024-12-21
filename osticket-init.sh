@@ -10,7 +10,7 @@ sudo rm -rf /tmp/osTicket/osTicket-v1.18.1/scripts
 sudo rm -f /var/www/html/index.html
 
 # inhalt von ../uploads/ in webserver moven 
-sudo mv /tmp/osTicket/osTicket-v1.18.1/osTicket-v1.18.1/uploads/* /var/www/html/
+sudo mv /tmp/osTicket/osTicket-v1.18.1/osTicket-v1.18.1/upload/* /var/www/html/
 
 # Besitzer und Dateiberechtigungen anpassen
 sudo chown -R www-data:www-data /var/www/html/
