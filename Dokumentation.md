@@ -50,6 +50,7 @@ Die Dokumenatation führen wir immer fortlaufend, das wir die Dokumentation imme
 
 ## 6. Testfälle
 
+Testfall 1
 Datenbank Testen: Tom Thach / Daris Bischof 22.12.2024 18:00
 
 Wir haben auf osTicket ein neues Ticket erstellt auf dem WebServer.
@@ -79,6 +80,31 @@ Wir können es auch schliessen, eine Antwort darauf geben.
 Fazit: <br>
 Es konnte auf den Apache WebServer zugegriffen werden mit osTicket drauf. 
 Wenn man ein Ticket erstellen bedetuet das eine Verbindung zu der Datenbank erfolgreich ist und die Datenbank korrekt angelegt wurde.
+---
+
+
+Testfall 2
+Installation Instances, VPC, Subnetz
+
+Nachdem das cloud-init.sh fertig war haben wir auf der AWS ec2 Instances geschaut ob die auch erstellt wurden.
+
+![instances](https://github.com/user-attachments/assets/a80d40b8-f5e1-4a5a-b325-6422c90c80aa)
+---
+<br>
+
+Danach haben wir auch geschaut das das "AutoVPC" erstellt worden ist.
+
+![vpc](https://github.com/user-attachments/assets/e413351a-9e5b-4164-85f7-da2f153b317d)
+---
+<br>
+
+Zuletzt das eigene "AutoSubnet"
+
+![subnetz](https://github.com/user-attachments/assets/8357cd34-927c-4bee-9530-76b71e36fd33)
+---
+
+Fazit:
+Es wurde alles erstellt und die Instances sind 
 
 
 ## 7. Reflexion
