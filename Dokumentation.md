@@ -137,7 +137,7 @@ Im Team haben wir uns entschieden, mehrere kleine Skripte zu erstellen, anstatt 
 **Fazit:**
 - Alle benötigten Ressourcen (Instances, VPC, Subnetz) wurden erfolgreich erstellt.
 
----
+<br>
 
 ## 7. Reflexion
 **Flavio:**   
