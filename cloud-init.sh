@@ -215,11 +215,6 @@ WEB_PUBLIC_IP=$(aws ec2 describe-instances \
 echo "dbServer Public IP: $DB_PUBLIC_IP"
 echo "webServer Public IP: $WEB_PUBLIC_IP"
 
-# SSH-Verbindung zum dbServer
-ssh -o StrictHostKeyChecking=no \
-    -i "$HOME/.ssh/osTicketGroupTFD_key.pem" \
-    ubuntu@"$DB_PUBLIC_IP"
-
 
 
 ### AWS-Instance-init.sh ### END
@@ -227,6 +222,12 @@ ssh -o StrictHostKeyChecking=no \
 ### database-init.sh ### START
 
 
+# SSH-Verbindung zum dbServer herstellen und Befehle remote ausführen
+ssh -o StrictHostKeyChecking=no \
+    -i "$HOME/.ssh/osTicketGroupTFD_key.pem" \
+    ubuntu@"$DB_PUBLIC_IP" << 'EOF'
+
+# --- Beginn der Remote-Befehle ---
 
 # benutzereingaben verhindern
 export DEBIAN_FRONTEND=noninteractive
@@ -245,29 +246,31 @@ sudo apt install -y mysql-server
 sudo systemctl start mysql
 sudo systemctl enable mysql
 
+# MySQL auf alle Interfaces binden
 sudo sed -i 's/^bind-address\s*=.*/bind-address = 0.0.0.0/' /etc/mysql/mysql.conf.d/mysqld.cnf
 sudo sed -i 's/^mysqlx-bind-address\s*=.*/mysqlx-bind-address = 0.0.0.0/' /etc/mysql/mysql.conf.d/mysqld.cnf
 
+# MySQL neu starten
 sudo systemctl restart mysql
 
-# dump istallieren
+# Datenbank-Dump herunterladen
 wget https://raw.githubusercontent.com/obamosaurus/Ticketsystem/main/osTicketDB_backup.sql
 
-# DB erstellen und root user passwort setzen
-# Root-Passwort setzen und Root-Benutzer konfigurieren
-sudo mysql -e "ALTER USER 'root'@'localhost' IDENTIFIED WITH mysql_native_password BY 'Riethuesli>12345!';
-               CREATE USER IF NOT EXISTS 'root'@'%' IDENTIFIED BY 'Riethuesli>12345!';
-               GRANT ALL PRIVILEGES ON *.* TO 'root'@'%' WITH GRANT OPTION;
-               FLUSH PRIVILEGES;"
+# Root-Passwort setzen und Remote-Zugriff konfigurieren
+sudo mysql -e "
+  ALTER USER 'root'@'localhost' IDENTIFIED WITH mysql_native_password BY 'Riethuesli>12345!';
+  CREATE USER IF NOT EXISTS 'root'@'%' IDENTIFIED BY 'Riethuesli>12345!';
+  GRANT ALL PRIVILEGES ON *.* TO 'root'@'%' WITH GRANT OPTION;
+  FLUSH PRIVILEGES;"
 
 # Dump importieren
 sudo mysql -u root -p'Riethuesli>12345!' < /home/ubuntu/osTicketDB_backup.sql
 
-# dumpfile entfernen
+# Dump-Datei entfernen
 sudo rm osTicketDB_backup.sql
 
-# ssh verbindung beenden
-exit
+# --- Ende der Remote-Befehle ---
+EOF
 
 
 
@@ -279,34 +282,30 @@ exit
 # ssh verbindung webserver
 ssh -o StrictHostKeyChecking=no \
     -i "$HOME/.ssh/osTicketGroupTFD_key.pem" \
-    ubuntu@"$WEB_PUBLIC_IP"
+    ubuntu@"$WEB_PUBLIC_IP" << 'EOF'
 
+# --- Beginn der Remote-Befehle ---
 
-# benutzereingaben verhindern
+# Benutzereingaben verhindern
 export DEBIAN_FRONTEND=noninteractive
 
-# needrestart: services neustarten ohne Daemons popup
+# needrestart: Services neustarten ohne Daemons-Popup
 sudo sh -c 'echo "\$nrconf{restart} = '\''a'\'';" > /etc/needrestart/conf.d/99-restart-auto.conf'
 
-# Update der Paketliste
+# Update und Upgrade
 sudo apt update && sudo apt upgrade -y
 
-# Installation von Apache
+# Apache installieren und starten
 sudo apt install -y apache2
-
-# Apache-Dienst starten
 sudo systemctl unmask apache2
 sudo systemctl start apache2
 sudo systemctl enable apache2
 
-# Installation benötigter services für osTicket und restart
+# Services für osTicket installieren
 sudo apt install -y php-mysql
-sudo apt-get install -y mysql-client 
-
-
-sudo apt-get install -y libapache2-mod-php
-sudo systemctl restart apache2.service
-
+sudo apt install -y mysql-client
+sudo apt install -y libapache2-mod-php
+sudo systemctl restart apache2
 
 
 ### apacheWebserver-init.sh ### END
@@ -314,45 +313,42 @@ sudo systemctl restart apache2.service
 ### osticket-init.sh ### START
 
 
+# osTicket herunterladen und entpacken
 wget https://raw.githubusercontent.com/obamosaurus/Ticketsystem/main/osTicket-v1.18.1.zip
 wget https://raw.githubusercontent.com/obamosaurus/Ticketsystem/main/ost-config.php
 
-
 sudo apt install -y unzip
-
-# osTicket unzip nach /tmp/osTicket und scripts entfernen
 unzip ~/osTicket-v1.18.1.zip -d /tmp/osTicket
 sudo rm -rf /tmp/osTicket/osTicket-v1.18.1/scripts
 
-# index.html vom webserver löschen
+# index.html entfernen
 sudo rm -f /var/www/html/index.html
 
-# inhalt von ../uploads/ in webserver moven 
+# osTicket in den Webserver verschieben
 sudo mv /tmp/osTicket/osTicket-v1.18.1/upload/* /var/www/html/
 
 # Besitzer und Dateiberechtigungen anpassen
 sudo chown -R www-data:www-data /var/www/html/
 sudo chmod -R 755 /var/www/html/
 
-# tmp Dateien löschen
+# Temporäre Dateien löschen
 rm -rf /tmp/osTicket
-
-# ZIP-Datei und Zone.Identifier aus Home löschen
 rm -f ~/osTicket-v1.18.1.zip
-rm -f ~/osTicket-v1.18.1.zip\:Zone.Identifier
+rm -f ~/osTicket-v1.18.1.zip:Zone.Identifier
 
-# config file vorbereiten
+# Config-File verschieben und Berechtigung setzen
 sudo mv ost-config.php /var/www/html/include/ost-config.php
-sudo chmod 0666 ost-config.php
+sudo chmod 0666 /var/www/html/include/ost-config.php
 
-# ssh verbindung beenden
-exit
+# --- Ende der Remote-Befehle ---
+EOF
 
 
 
 ### osticket-init.sh ### END
 # ----------------------------------------
 ### end ### START
+
 
 clear
 
