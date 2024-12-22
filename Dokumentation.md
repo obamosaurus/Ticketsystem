@@ -52,8 +52,8 @@ Die Dokumenatation führen wir immer fortlaufend, das wir die Dokumentation imme
 Datenbank Testen:
 
 Wir haben auf osTicket ein neues Ticket erstellt und danach mit unserem Agent Account uns angemeldet.
+
 In den Tickets steht das neue Ticket. Bedeutet es hat funktioniert.
-Wir haben noch in der Datenbank selbst geschaut ob es auch darin ist.
 
 ## 7. Reflexion
 Flavio:
