@@ -114,6 +114,9 @@ Im Team haben wir uns entschieden, mehrere kleine Skripte zu erstellen, anstatt 
 <br><br>
 
 ### Testfall 2: Installation von Instances, VPC und Subnetz
+**Durchgeführt von:** Tom Thach / Daris Bischof  
+**Datum:** 22.12.2024, 18:00
+
 **Durchführung:**
 1. Nach Fertigstellung des `cloud-init.sh`-Skripts wurden die EC2-Instances in AWS überprüft.
 
@@ -142,7 +145,18 @@ Ich habe während dem Projekt zu jeder Zeit eine gute Kommunikation erlebt. Wir 
  
 
 **Tom:**
-Ich finde das dieses 
+
+*Was lief gut?*
+*Das Projekt war ein Erfolg für mich. Wir haben gemeinsam die AWS-Instanzen konfiguriert und das Skript verbessert. Es hat Spaß gemacht, zu sehen, wie unsere Arbeit am Ende funktioniert hat. Besonders gefallen hat mir die Zusammenarbeit mit Daris, weil wir in den letzten Tagen des Projekts immer sehr lange dran und wach geblieben sind bis es endlich funktioniert hatte.*
+
+Herausforderungen
+*Am Anfang war ich unsicher, weil ich nicht genau wusste, was zu tun war. In den Lektionen hatten wir nur grundlegende Dinge wie eine Instanz und ein Bucket erstellt, und mir fehlte das Wissen über die Sachen die wir nicht hatten wie GitLab oder GitHub. Das hat mich anfangs etwas verwirrt und verunsichert.*
+
+Lernerfolge
+*Ich habe während des Projekts viel gelernt über Github und AWS. Fehler finden in den Skripts und diese auch beheben hatte mir spass gemacht und so konnte ich mehr über die Scripts lernen wie alles genau funktioniert. Das Instanzen Skript war für mich ein Erfolg, weil Daris und ich eine weile lang daran gearbeitet haben und es endlich funktioniert hatte ohne Fehlerausgabe oder eine Eingabe des Benutzers.*
+
+Rückblick und Verbesserungsvorschläge
+*Was mir nicht so gefallen hat, war, dass ich zunächst nur an der Dokumentation gearbeitet habe, obwohl ich auch praktisch tätig sein wollte. In zukünftigen Projekten möchte ich aktiver von Anfang an mitarbeiten. Ich finde man sollte in den Lektionen erklären was Github/Gitlab ist und auch wie es funktioniert. Dasselbe sollte man auch machen wie sich die Instanzen sozusagen verbinden können, weil die zuerst sich gar nicht verbinden konnte ohne eigene VPC und Subnetz.*
 
 **Daris:**
 *text*
