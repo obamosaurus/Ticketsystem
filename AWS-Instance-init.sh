@@ -1,52 +1,169 @@
 #!/bin/bash
- 
-# SSH-Key erstellen
+
+#
+# TEIL 1: VPC, Subnetz und Internet-Gateway erstellen
+#
+
+# 1) VPC erstellen
+echo "Erstelle VPC..."
+VPC_ID=$(aws ec2 create-vpc \
+  --cidr-block 10.0.0.0/16 \
+  --query 'Vpc.VpcId' \
+  --output text)
+echo "VPC erstellt. VPC ID: $VPC_ID"
+
+# 2) Warten, bis die VPC verfügbar ist
+echo "Warte auf die VPC-Verfuegbarkeit..."
+aws ec2 wait vpc-available --vpc-ids $VPC_ID
+
+# 3) Tag der VPC setzen
+aws ec2 create-tags \
+  --resources $VPC_ID \
+  --tags Key=Name,Value=AutoVPC
+echo "VPC getaggt als 'AutoVPC'."
+
+# 4) Subnetz erstellen
+echo "Erstelle Subnetz..."
+SUBNET_ID=$(aws ec2 create-subnet \
+  --vpc-id $VPC_ID \
+  --cidr-block 10.0.1.0/24 \
+  --query 'Subnet.SubnetId' \
+  --output text)
+echo "Subnetz erstellt. Subnet ID: $SUBNET_ID"
+
+# 5) Warten, bis das Subnetz verfügbar ist
+echo "Warte auf die Subnetz-Verfuegbarkeit..."
+aws ec2 wait subnet-available --subnet-ids $SUBNET_ID
+
+# 6) Tag des Subnetzes setzen
+aws ec2 create-tags \
+  --resources $SUBNET_ID \
+  --tags Key=Name,Value=AutoSubnet
+echo "Subnetz getaggt als 'AutoSubnet'."
+
+# 7) Internet-Gateway erstellen und an VPC anhängen
+echo "Erstelle Internet-Gateway..."
+IGW_ID=$(aws ec2 create-internet-gateway \
+  --query 'InternetGateway.InternetGatewayId' \
+  --output text)
+echo "Internet-Gateway erstellt. IGW ID: $IGW_ID"
+
+aws ec2 attach-internet-gateway \
+  --vpc-id $VPC_ID \
+  --internet-gateway-id $IGW_ID
+echo "Internet-Gateway an die VPC angehaengt."
+
+# 8) Routing-Tabelle erstellen und Route zu 0.0.0.0/0 hinzufügen
+echo "Erstelle Routing-Tabelle..."
+ROUTE_TABLE_ID=$(aws ec2 create-route-table \
+  --vpc-id $VPC_ID \
+  --query 'RouteTable.RouteTableId' \
+  --output text)
+echo "Routing-Tabelle erstellt. Route Table ID: $ROUTE_TABLE_ID"
+
+aws ec2 create-route \
+  --route-table-id $ROUTE_TABLE_ID \
+  --destination-cidr-block 0.0.0.0/0 \
+  --gateway-id $IGW_ID
+echo "Route zu 0.0.0.0/0 hinzugefuegt."
+
+# 9) Subnetz mit Routing-Tabelle verknüpfen
+aws ec2 associate-route-table \
+  --subnet-id $SUBNET_ID \
+  --route-table-id $ROUTE_TABLE_ID
+echo "Subnetz mit der Routing-Tabelle verknuepft."
+
+echo "VPC und Subnetz wurden erfolgreich erstellt."
+echo "VPC ID: $VPC_ID"
+echo "Subnetz ID: $SUBNET_ID"
+
+#
+# TEIL 2: SSH-Key, Security Group und EC2-Instanzen erstellen
+#
+
+# 1) SSH-Key erstellen
 echo "Erstelle SSH-Key..."
-mkdir -p ~/.ssh && aws ec2 create-key-pair --key-name osTicketGroupTFD_key --key-type rsa --query 'KeyMaterial' --output text > ~/.ssh/osTicketGroupTFD_key.pem && chmod 600 ~/.ssh/osTicketGroupTFD_key.pem
+mkdir -p ~/.ssh
+aws ec2 create-key-pair \
+  --key-name osTicketGroupTFD_key \
+  --key-type rsa \
+  --query 'KeyMaterial' \
+  --output text > ~/.ssh/osTicketGroupTFD_key.pem
+
+chmod 600 ~/.ssh/osTicketGroupTFD_key.pem
 echo "SSH-Key erstellt und gespeichert unter ~/.ssh/osTicketGroupTFD_key.pem"
- 
-# Key-Pfad setzen
+
+# Key-Pfad definieren
 KEY_PATH="$HOME/.ssh/osTicketGroupTFD_key.pem"
- 
-# Sicherheitsgruppe erstellen
+
+# 2) Security Group erstellen
+#    Hinweis: --vpc-id sorgt dafuer, dass die Gruppe in der neu erstellten VPC liegt.
 echo "Erstelle Security Group..."
-GROUP_ID=$(aws ec2 create-security-group --group-name osTicketGroupTFD_secGroup --description "EC2-M364 sec-group" --query 'GroupId' --output text)
+GROUP_ID=$(aws ec2 create-security-group \
+  --group-name osTicketGroupTFD_secGroup \
+  --description "EC2-M364 sec-group" \
+  --vpc-id $VPC_ID \
+  --query 'GroupId' \
+  --output text)
 echo "Security Group erstellt. Group ID: $GROUP_ID"
- 
-# Sicherheitsregeln setzen
-echo "Autorisiere Sicherheitsregeln für Port 80 (HTTP)..."
-aws ec2 authorize-security-group-ingress --group-id $GROUP_ID --protocol tcp --port 80 --cidr 0.0.0.0/0
+
+# 3) Sicherheitsregeln setzen
+echo "Autorisiere Sicherheitsregeln fuer Port 80 (HTTP)..."
+aws ec2 authorize-security-group-ingress \
+  --group-id $GROUP_ID \
+  --protocol tcp \
+  --port 80 \
+  --cidr 0.0.0.0/0
 echo "Port 80 (HTTP) autorisiert."
- 
-echo "Autorisiere Sicherheitsregeln für Port 22 (SSH)..."
-aws ec2 authorize-security-group-ingress --group-id $GROUP_ID --protocol tcp --port 22 --cidr 0.0.0.0/0
+
+echo "Autorisiere Sicherheitsregeln fuer Port 22 (SSH)..."
+aws ec2 authorize-security-group-ingress \
+  --group-id $GROUP_ID \
+  --protocol tcp \
+  --port 22 \
+  --cidr 0.0.0.0/0
 echo "Port 22 (SSH) autorisiert."
- 
-# EC2-Instanz dbServer starten 
-echo "Starte EC2-Instanz..."
-INSTANCE_ID=$(aws ec2 run-instances \
-    --image-id ami-08c40ec9ead489470 \
-    --count 1 \
-    --instance-type t2.micro \
-    --key-name osTicketGroupTFD_key \
-    --security-group-ids $GROUP_ID \
-    --iam-instance-profile Name=LabInstanceProfile \
-    --tag-specifications 'ResourceType=instance,Tags=[{Key=Name,Value=dbServer}]' \
-    --query 'Instances[0].InstanceId' --output text)
- 
-echo "EC2-Instanz gestartet. Instance ID: $INSTANCE_ID"
 
+# 4) EC2-Instanzen erstellen
+#    Fuer beide Instanzen das gleiche AMI und Instance-Profil, aber unterschiedliche Tags (dbServer, webServer).
+#    Subnetz wird auf die zuvor erstellte Subnet-ID gesetzt.
 
-# EC2-Instanz webServer starten 
-echo "Starte EC2-Instanz..."
-INSTANCE_ID=$(aws ec2 run-instances \
-    --image-id ami-08c40ec9ead489470 \
-    --count 1 \
-    --instance-type t2.micro \
-    --key-name osTicketGroupTFD_key \
-    --security-group-ids $GROUP_ID \
-    --iam-instance-profile Name=LabInstanceProfile \
-    --tag-specifications 'ResourceType=instance,Tags=[{Key=Name,Value=webServer}]' \
-    --query 'Instances[0].InstanceId' --output text)
- 
-echo "EC2-Instanz gestartet. Instance ID: $INSTANCE_ID"
+AMI_ID="ami-08c40ec9ead489470"        # Beispiel-AMI
+INSTANCE_TYPE="t2.micro"
+IAM_PROFILE="LabInstanceProfile"
+
+echo "Starte dbServer-Instanz..."
+DB_INSTANCE_ID=$(aws ec2 run-instances \
+  --image-id $AMI_ID \
+  --count 1 \
+  --instance-type $INSTANCE_TYPE \
+  --key-name osTicketGroupTFD_key \
+  --security-group-ids $GROUP_ID \
+  --subnet-id $SUBNET_ID \
+  --iam-instance-profile Name=$IAM_PROFILE \
+  --tag-specifications "ResourceType=instance,Tags=[{Key=Name,Value=dbServer}]" \
+  --query 'Instances[0].InstanceId' \
+  --output text)
+echo "dbServer-Instanz gestartet. Instance ID: $DB_INSTANCE_ID"
+
+echo "Starte webServer-Instanz..."
+WEB_INSTANCE_ID=$(aws ec2 run-instances \
+  --image-id $AMI_ID \
+  --count 1 \
+  --instance-type $INSTANCE_TYPE \
+  --key-name osTicketGroupTFD_key \
+  --security-group-ids $GROUP_ID \
+  --subnet-id $SUBNET_ID \
+  --iam-instance-profile Name=$IAM_PROFILE \
+  --tag-specifications "ResourceType=instance,Tags=[{Key=Name,Value=webServer}]" \
+  --query 'Instances[0].InstanceId' \
+  --output text)
+echo "webServer-Instanz gestartet. Instance ID: $WEB_INSTANCE_ID"
+
+echo ""
+echo "Alle Schritte abgeschlossen!"
+echo "VPC ID: $VPC_ID"
+echo "Subnetz ID: $SUBNET_ID"
+echo "Security Group ID: $GROUP_ID"
+echo "dbServer ID: $DB_INSTANCE_ID"
+echo "webServer ID: $WEB_INSTANCE_ID"
