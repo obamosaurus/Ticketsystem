@@ -38,7 +38,7 @@ Datenbank:  MySQL
 Wir haben uns für diese Server entschieden, da diese die üblichsten sind und wir damit bereits Erfahrungen gesammelt haben.
 
 ## 4. Scripts
-Wir haben uns im Team entschieden mehrere kleine Scripts zu erstellen und nicht ein grosses Script. Bei den einzelnen Scripts geht es nur um die Installation der einzelnen Server und Diensten. Die Idee dahinter ist, das wir so immer zum gleichen Setup kommen und das keine Fehler während der Installation auftauchen.
+Wir haben uns im Team entschieden mehrere kleine Scripts zu erstellen und nicht ein grosses Script. Bei den einzelnen Scripts geht es nur um die Installation der einzelnen Server und Diensten. Die Idee dahinter ist, das wir so immer zum gleichen Setup kommen und das keine Fehler während der Installation auftauchen. In diesen Scripts ist immer in etwa der gleich Ablauf. Zuerst wird das System auf den neusten Stand gebracht und dann kommt der Befehl der den gewissen Dienst installiert. 
 
 
 ## 5. Vorgehen
@@ -51,6 +51,7 @@ Die Dokumenatation führen wir immer fortlaufend, das wir die Dokumentation imme
 
 ## 6. Reflexion
 Flavio:
+
 
 Tom:
 
