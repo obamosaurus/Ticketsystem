@@ -3,7 +3,7 @@
 sudo apt install -y unzip
 
 # osTicket unzip nach /tmp/osTicket
-unzip ~/ticketsystem/osTicket-v1.18.1.zip -d /tmp/osTicket
+unzip ~/Ticketsystem/osTicket-v1.18.1.zip -d /tmp/osTicket
 sudo rm -rf /tmp/osTicket/osTicket-v1.18.1/scripts
 
 # index.html vom webserver löschen
@@ -27,3 +27,6 @@ rm -f ~/osTicket-v1.18.1.zip\:Zone.Identifier
 cd /var/www/html/include/
 sudo cp ost-sampleconfig.php /var/www/html/include/ost-config.php
 sudo chmod 0666 ost-config.php
+
+# Installation benötigter services für osTicket
+sudo apt install -y php-mysql
