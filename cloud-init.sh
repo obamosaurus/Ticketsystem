@@ -110,7 +110,7 @@ GROUP_ID=$(aws ec2 create-security-group \
   --output text)
 echo "Security Group erstellt. Group ID: $GROUP_ID"
 
-
+sleep 10
 
 # Sicherheitsregeln setzen
 # TCP 80 (HTTP)
@@ -149,7 +149,7 @@ aws ec2 authorize-security-group-ingress \
   --cidr 10.0.0.0/16
 echo "ICMP (Ping) autorisiert."
 
-
+sleep 10
 
 # EC2-Instanzen erstellen
 AMI_ID="ami-08c40ec9ead489470"
@@ -215,7 +215,7 @@ WEB_PUBLIC_IP=$(aws ec2 describe-instances \
 echo "dbServer Public IP: $DB_PUBLIC_IP"
 echo "webServer Public IP: $WEB_PUBLIC_IP"
 
-
+sleep 10
 
 ### AWS-Instance-init.sh ### END
 # ----------------------------------------
@@ -235,12 +235,19 @@ export DEBIAN_FRONTEND=noninteractive
 # needrestart: services neustarten ohne Daemons popup
 sudo sh -c 'echo "\$nrconf{restart} = '\''a'\'';" > /etc/needrestart/conf.d/99-restart-auto.conf'
 
+echo -e "\e[32mupdate und upgrade\e[0m"
+
 # apt updaten und upgrade
 sudo apt update
 sudo apt upgrade -y
 
+echo -e "\e[32mservices installieren\e[0m"
+
 # MySQL installieren
 sudo apt install -y mysql-server
+sudo apt install mysql-client-core-8.0
+ 
+echo -e "\e[32mservices starten\e[0m"
 
 # MySQL service starten und aktivieren
 sudo systemctl start mysql
