@@ -138,7 +138,8 @@ Im Team haben wir uns entschieden, mehrere kleine Skripte zu erstellen, anstatt 
 
 ## 7. Reflexion
 **Flavio:**
-*text*
+Ich habe während dem Projekt zu jeder Zeit eine gute Kommunikation erlebt. Wir haben meiner Meinung nach in der Gruppe sehr gut funktioniert. Wir haben in der Gruppe die Arbeiten gut aufgeteilt, so dass jeder zu seinen stärken etwas beitragen kann. Wir hatten das Zeitmanagement eigenlich immer gut im griff ausser gegen den Schluss mussten wir etwas stressen. Das beste am Projekt war als das Skript dann funktioniert hatte. Am wenigsten gefallen hat mir das erstellen der Skripts, dazu hatten wir anfangs ein paar Schwierigkeiten mit dem starten, da wir nicht genau wussten was wir machen müssen.
+ 
 
 **Tom:**
 *text*
