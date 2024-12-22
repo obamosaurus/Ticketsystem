@@ -1,5 +1,11 @@
 #!/bin/bash
 
+# benutzereingaben verhindern
+export DEBIAN_FRONTEND=noninteractive
+
+# needrestart: services neustarten ohne Daemons popup
+sudo sh -c 'echo "\$nrconf{restart} = '\''a'\'';" > /etc/needrestart/conf.d/99-restart-auto.conf'
+
 # Update der Paketliste
 sudo apt update && sudo apt upgrade -y
 
