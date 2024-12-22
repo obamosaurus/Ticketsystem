@@ -3,10 +3,11 @@
 # Inhaltsverzeichnis
 1. [Projektbeschreibung](#1-projektbeschreibung)
 2. [Auswahl des Ticketsystems](#1-auswahl-des-ticketsystems)
-3. [Server Auswahl](#2-Server Auswahl)
+3. [Server Auswahl](#3-server-auswahl)
 4. [Scripts](#3-Scripts)
 5. [Vorgehen](#4-Vorgehen)
 6. [Testfälle](#5-Testfälle)
+7. [Reflexion](#7-reflexion)
 
 ## 1. **Projektbeschreibung**
 Das Aufgabenstellung ist folgende:
@@ -38,7 +39,7 @@ Datenbank:  MySQL
 Wir haben uns für diese Server entschieden, da diese die üblichsten sind und wir damit bereits Erfahrungen gesammelt haben.
 
 ## 4. Scripts
-Wir haben uns im Team entschieden mehrere kleine Scripts zu erstellen und nicht ein grosses Script. Bei den einzelnen Scripts geht es nur um die Installation der einzelnen Server und Diensten. Die Idee dahinter ist, das wir so immer zum gleichen Setup kommen und das keine Fehler während der Installation auftauchen.
+Wir haben uns im Team entschieden mehrere kleine Scripts zu erstellen und nicht ein grosses Script. Bei den einzelnen Scripts geht es nur um die Installation der einzelnen Server und Diensten. Die Idee dahinter ist, das wir so immer zum gleichen Setup kommen und das keine Fehler während der Installation auftauchen. In diesen Scripts ist immer in etwa der gleich Ablauf. Zuerst wird das System auf den neusten Stand gebracht und dann kommt der Befehl der den gewissen Dienst installiert. 
 
 
 ## 5. Vorgehen
@@ -54,8 +55,9 @@ Wir haben auf osTicket ein neues Ticket erstellt und danach mit unserem Agent Ac
 In den Tickets steht das neue Ticket. Bedeutet es hat funktioniert.
 Wir haben noch in der Datenbank selbst geschaut ob es auch darin ist.
 
-## 6. Reflexion
+## 7. Reflexion
 Flavio:
+
 
 Tom:
 
