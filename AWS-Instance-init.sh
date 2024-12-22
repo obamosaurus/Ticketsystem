@@ -98,7 +98,6 @@ echo "SSH-Key erstellt und gespeichert unter ~/.ssh/osTicketGroupTFD_key.pem"
 KEY_PATH="$HOME/.ssh/osTicketGroupTFD_key.pem"
 
 # 2) Security Group erstellen
-#    Hinweis: --vpc-id sorgt dafuer, dass die Gruppe in der neu erstellten VPC liegt.
 echo "Erstelle Security Group..."
 GROUP_ID=$(aws ec2 create-security-group \
   --group-name osTicketGroupTFD_secGroup \
@@ -128,7 +127,6 @@ aws ec2 authorize-security-group-ingress \
 echo "Port 22 (SSH) autorisiert."
 
 #    c) TCP 3306 (MySQL) innerhalb der VPC
-#       Damit sich Webserver und DB-Server gegenseitig erreichen koennen.
 echo "Autorisiere Sicherheitsregeln fuer Port 3306 (MySQL)..."
 aws ec2 authorize-security-group-ingress \
   --group-id $GROUP_ID \
@@ -147,9 +145,7 @@ aws ec2 authorize-security-group-ingress \
 echo "ICMP (Ping) autorisiert."
 
 # 4) EC2-Instanzen erstellen
-#    Fuer beide Instanzen das gleiche AMI und Instance-Profil, jedoch unterschiedliche Tags (dbServer, webServer).
-#    Subnetz wird auf die zuvor erstellte Subnet-ID gesetzt.
-
+#    Hier werden die privaten IP-Adressen ueber --private-ip-address vorgegeben.
 AMI_ID="ami-08c40ec9ead489470"   # Beispiel-AMI
 INSTANCE_TYPE="t2.micro"
 IAM_PROFILE="LabInstanceProfile"
@@ -164,6 +160,7 @@ DB_INSTANCE_ID=$(aws ec2 run-instances \
   --subnet-id $SUBNET_ID \
   --associate-public-ip-address \
   --iam-instance-profile Name=$IAM_PROFILE \
+  --private-ip-address 10.0.1.135 \
   --tag-specifications "ResourceType=instance,Tags=[{Key=Name,Value=dbServer}]" \
   --query 'Instances[0].InstanceId' \
   --output text)
@@ -179,6 +176,7 @@ WEB_INSTANCE_ID=$(aws ec2 run-instances \
   --subnet-id $SUBNET_ID \
   --associate-public-ip-address \
   --iam-instance-profile Name=$IAM_PROFILE \
+  --private-ip-address 10.0.1.136 \
   --tag-specifications "ResourceType=instance,Tags=[{Key=Name,Value=webServer}]" \
   --query 'Instances[0].InstanceId' \
   --output text)
@@ -191,8 +189,6 @@ echo "Subnetz ID: $SUBNET_ID"
 echo "Security Group ID: $GROUP_ID"
 echo "dbServer ID: $DB_INSTANCE_ID"
 echo "webServer ID: $WEB_INSTANCE_ID"
-
-
 
 # Warten, bis die beiden Instanzen im Status "running" sind
 aws ec2 wait instance-running --instance-ids "$DB_INSTANCE_ID" "$WEB_INSTANCE_ID"
@@ -212,7 +208,7 @@ WEB_PUBLIC_IP=$(aws ec2 describe-instances \
 echo "dbServer Public IP: $DB_PUBLIC_IP"
 echo "webServer Public IP: $WEB_PUBLIC_IP"
 
-
+# Beispiel: SSH-Verbindung zum dbServer
 ssh -o StrictHostKeyChecking=no \
     -i "$HOME/.ssh/osTicketGroupTFD_key.pem" \
     ubuntu@"$DB_PUBLIC_IP"
