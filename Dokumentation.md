@@ -3,10 +3,11 @@
 # Inhaltsverzeichnis
 1. [Projektbeschreibung](#1-projektbeschreibung)
 2. [Auswahl des Ticketsystems](#1-auswahl-des-ticketsystems)
-3. [Server Auswahl](#2-Server Auswahl)
+3. [Server Auswahl](#3-server-auswahl)
 4. [Scripts](#3-Scripts)
 5. [Vorgehen](#4-Vorgehen)
 6. [Testfälle](#5-Testfälle)
+7. [Reflexion](#7-reflexion)
 
 ## 1. **Projektbeschreibung**
 Das Aufgabenstellung ist folgende:
@@ -49,7 +50,7 @@ Die Dokumenatation führen wir immer fortlaufend, das wir die Dokumentation imme
 ## 6. Testfälle
 
 
-## 6. Reflexion
+## 7. Reflexion
 Flavio:
 
 
