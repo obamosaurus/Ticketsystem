@@ -94,5 +94,7 @@ Daris:
 |--------------|--------------|--------------|
 | GBS Anleitung AWS | OneNote M364: Bash Script Befehle |  12.12.2024 |
 | GBS Anleitung AWS    | 09-AA-EC2-Instance-CLI.pdf (Aufgabenblatt von Lektion 28.11.2024) | 12.12.2024   |
+| GBS GitLab M346 | https://gbssg.gitlab.io/m346/iac-aws-cli/ | 17.12.2024 |
 | VPC und Subnetz erstellen   | https://chatgpt.com/share/67686072-4fb8-800a-9e1a-e807f45fbd2d  | 21.12.2024  |
 | Remotezugriff von webserver zu DB erlauben über gleiches subnet   | https://linuxize.com/post/mysql-remote-access/  | 21.12.2024   |
+
