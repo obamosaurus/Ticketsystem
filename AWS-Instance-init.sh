@@ -191,3 +191,28 @@ echo "Subnetz ID: $SUBNET_ID"
 echo "Security Group ID: $GROUP_ID"
 echo "dbServer ID: $DB_INSTANCE_ID"
 echo "webServer ID: $WEB_INSTANCE_ID"
+
+
+
+# Warten, bis die beiden Instanzen im Status "running" sind
+aws ec2 wait instance-running --instance-ids "$DB_INSTANCE_ID" "$WEB_INSTANCE_ID"
+
+# Public IP-Adressen in Variablen speichern
+DB_PUBLIC_IP=$(aws ec2 describe-instances \
+  --instance-ids "$DB_INSTANCE_ID" \
+  --query "Reservations[].Instances[].PublicIpAddress" \
+  --output text)
+
+WEB_PUBLIC_IP=$(aws ec2 describe-instances \
+  --instance-ids "$WEB_INSTANCE_ID" \
+  --query "Reservations[].Instances[].PublicIpAddress" \
+  --output text)
+
+# Ausgeben der Public IP-Adressen
+echo "dbServer Public IP: $DB_PUBLIC_IP"
+echo "webServer Public IP: $WEB_PUBLIC_IP"
+
+
+ssh -o StrictHostKeyChecking=no \
+    -i "$HOME/.ssh/osTicketGroupTFD_key.pem" \
+    ubuntu@"$DB_PUBLIC_IP"
