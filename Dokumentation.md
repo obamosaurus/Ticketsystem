@@ -49,11 +49,36 @@ Die Dokumenatation führen wir immer fortlaufend, das wir die Dokumentation imme
 
 ## 6. Testfälle
 
-Datenbank Testen:
+Datenbank Testen: Tom Thach / Daris Bischof 22.12.2024 18:00
 
-Wir haben auf osTicket ein neues Ticket erstellt und danach mit unserem Agent Account uns angemeldet.
+Wir haben auf osTicket ein neues Ticket erstellt auf dem WebServer.
+
+![Screenshot 2024-12-22 173537](https://github.com/user-attachments/assets/545bd1fd-3d1c-4393-92fe-1c679fbdd2cf)
+---
+<br>
+Hier sieht man das ausgefüllte Ticket und es wurde erstellt.
+
+![Screenshot 2024-12-22 173901](https://github.com/user-attachments/assets/cafd47d5-4cff-4779-b6b5-a9f93f5b29ca)
+![Screenshot 2024-12-22 174205](https://github.com/user-attachments/assets/69a2bf00-4947-41e0-9b49-16484b40850e)
+---
+<br>
+Nachdem wir es erstellt haben, sind wir auf den Agent Account und haben darin geschaut ob das Ticket wirklich drin ist.
+
+![Screenshot 2024-12-22 174218](https://github.com/user-attachments/assets/a2122c25-6bfb-4428-930a-cedb660d031a)
+![Screenshot 2024-12-22 174241](https://github.com/user-attachments/assets/89ca7697-0d63-4c53-85c7-cd88ff0de6e1)
+---
+
+
 
 In den Tickets steht das neue Ticket. Bedeutet es hat funktioniert.
+Wir können es auch schliessen, eine Antwort darauf geben.
+
+---
+
+Fazit: <br>
+Es konnte auf den Apache WebServer zugegriffen werden mit osTicket drauf. 
+Wenn man ein Ticket erstellen bedetuet das eine Verbindung zu der Datenbank erfolgreich ist und die Datenbank korrekt angelegt wurde.
+
 
 ## 7. Reflexion
 Flavio:
