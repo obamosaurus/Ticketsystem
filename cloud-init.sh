@@ -261,10 +261,13 @@ sudo mysql -e "
   ALTER USER 'root'@'localhost' IDENTIFIED WITH mysql_native_password BY 'Riethuesli>12345!';
   CREATE USER IF NOT EXISTS 'root'@'%' IDENTIFIED BY 'Riethuesli>12345!';
   GRANT ALL PRIVILEGES ON *.* TO 'root'@'%' WITH GRANT OPTION;
-  FLUSH PRIVILEGES;"
+  FLUSH PRIVILEGES;
+  CREATE DATABASE IF NOT EXISTS osTicketDB;
+"
 
 # Dump importieren
-sudo mysql -u root -p'Riethuesli>12345!' < /home/ubuntu/osTicketDB_backup.sql
+sudo mysql -u root -p'Riethuesli>12345!' osTicketDB < /home/ubuntu/osTicketDB_backup.sql
+
 
 # Dump-Datei entfernen
 sudo rm osTicketDB_backup.sql
