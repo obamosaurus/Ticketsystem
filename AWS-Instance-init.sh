@@ -12,7 +12,7 @@ VPC_ID=$(aws ec2 create-vpc \
   --output text)
 echo "VPC erstellt. VPC ID: $VPC_ID"
 
-# 2) Warten, bis die VPC verfügbar ist
+# 2) Warten, bis die VPC verfuegbar ist
 echo "Warte auf die VPC-Verfuegbarkeit..."
 aws ec2 wait vpc-available --vpc-ids $VPC_ID
 
@@ -31,7 +31,7 @@ SUBNET_ID=$(aws ec2 create-subnet \
   --output text)
 echo "Subnetz erstellt. Subnet ID: $SUBNET_ID"
 
-# 5) Warten, bis das Subnetz verfügbar ist
+# 5) Warten, bis das Subnetz verfuegbar ist
 echo "Warte auf die Subnetz-Verfuegbarkeit..."
 aws ec2 wait subnet-available --subnet-ids $SUBNET_ID
 
@@ -41,7 +41,7 @@ aws ec2 create-tags \
   --tags Key=Name,Value=AutoSubnet
 echo "Subnetz getaggt als 'AutoSubnet'."
 
-# 7) Internet-Gateway erstellen und an VPC anhängen
+# 7) Internet-Gateway erstellen und an VPC anhaengen
 echo "Erstelle Internet-Gateway..."
 IGW_ID=$(aws ec2 create-internet-gateway \
   --query 'InternetGateway.InternetGatewayId' \
@@ -53,7 +53,7 @@ aws ec2 attach-internet-gateway \
   --internet-gateway-id $IGW_ID
 echo "Internet-Gateway an die VPC angehaengt."
 
-# 8) Routing-Tabelle erstellen und Route zu 0.0.0.0/0 hinzufügen
+# 8) Routing-Tabelle erstellen und Route zu 0.0.0.0/0 hinzufuegen
 echo "Erstelle Routing-Tabelle..."
 ROUTE_TABLE_ID=$(aws ec2 create-route-table \
   --vpc-id $VPC_ID \
@@ -67,7 +67,7 @@ aws ec2 create-route \
   --gateway-id $IGW_ID
 echo "Route zu 0.0.0.0/0 hinzugefuegt."
 
-# 9) Subnetz mit Routing-Tabelle verknüpfen
+# 9) Subnetz mit Routing-Tabelle verknuepfen
 aws ec2 associate-route-table \
   --subnet-id $SUBNET_ID \
   --route-table-id $ROUTE_TABLE_ID
@@ -76,6 +76,7 @@ echo "Subnetz mit der Routing-Tabelle verknuepft."
 echo "VPC und Subnetz wurden erfolgreich erstellt."
 echo "VPC ID: $VPC_ID"
 echo "Subnetz ID: $SUBNET_ID"
+
 
 #
 # TEIL 2: SSH-Key, Security Group und EC2-Instanzen erstellen
@@ -108,6 +109,7 @@ GROUP_ID=$(aws ec2 create-security-group \
 echo "Security Group erstellt. Group ID: $GROUP_ID"
 
 # 3) Sicherheitsregeln setzen
+#    a) TCP 80 (HTTP)
 echo "Autorisiere Sicherheitsregeln fuer Port 80 (HTTP)..."
 aws ec2 authorize-security-group-ingress \
   --group-id $GROUP_ID \
@@ -116,6 +118,7 @@ aws ec2 authorize-security-group-ingress \
   --cidr 0.0.0.0/0
 echo "Port 80 (HTTP) autorisiert."
 
+#    b) TCP 22 (SSH)
 echo "Autorisiere Sicherheitsregeln fuer Port 22 (SSH)..."
 aws ec2 authorize-security-group-ingress \
   --group-id $GROUP_ID \
@@ -124,11 +127,30 @@ aws ec2 authorize-security-group-ingress \
   --cidr 0.0.0.0/0
 echo "Port 22 (SSH) autorisiert."
 
+#    c) TCP 3306 (MySQL) innerhalb der VPC
+#       Damit sich Webserver und DB-Server gegenseitig erreichen koennen.
+echo "Autorisiere Sicherheitsregeln fuer Port 3306 (MySQL)..."
+aws ec2 authorize-security-group-ingress \
+  --group-id $GROUP_ID \
+  --protocol tcp \
+  --port 3306 \
+  --cidr 10.0.0.0/16
+echo "Port 3306 (MySQL) autorisiert."
+
+#    d) ICMP (Ping) innerhalb der VPC
+echo "Autorisiere ICMP (Ping) innerhalb der VPC..."
+aws ec2 authorize-security-group-ingress \
+  --group-id $GROUP_ID \
+  --protocol icmp \
+  --port -1 \
+  --cidr 10.0.0.0/16
+echo "ICMP (Ping) autorisiert."
+
 # 4) EC2-Instanzen erstellen
-#    Fuer beide Instanzen das gleiche AMI und Instance-Profil, aber unterschiedliche Tags (dbServer, webServer).
+#    Fuer beide Instanzen das gleiche AMI und Instance-Profil, jedoch unterschiedliche Tags (dbServer, webServer).
 #    Subnetz wird auf die zuvor erstellte Subnet-ID gesetzt.
 
-AMI_ID="ami-08c40ec9ead489470"        # Beispiel-AMI
+AMI_ID="ami-08c40ec9ead489470"   # Beispiel-AMI
 INSTANCE_TYPE="t2.micro"
 IAM_PROFILE="LabInstanceProfile"
 
@@ -140,6 +162,7 @@ DB_INSTANCE_ID=$(aws ec2 run-instances \
   --key-name osTicketGroupTFD_key \
   --security-group-ids $GROUP_ID \
   --subnet-id $SUBNET_ID \
+  --associate-public-ip-address \
   --iam-instance-profile Name=$IAM_PROFILE \
   --tag-specifications "ResourceType=instance,Tags=[{Key=Name,Value=dbServer}]" \
   --query 'Instances[0].InstanceId' \
@@ -154,6 +177,7 @@ WEB_INSTANCE_ID=$(aws ec2 run-instances \
   --key-name osTicketGroupTFD_key \
   --security-group-ids $GROUP_ID \
   --subnet-id $SUBNET_ID \
+  --associate-public-ip-address \
   --iam-instance-profile Name=$IAM_PROFILE \
   --tag-specifications "ResourceType=instance,Tags=[{Key=Name,Value=webServer}]" \
   --query 'Instances[0].InstanceId' \
