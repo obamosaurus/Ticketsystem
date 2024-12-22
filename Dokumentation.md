@@ -48,6 +48,11 @@ Die Dokumenatation führen wir immer fortlaufend, das wir die Dokumentation imme
 
 ## 6. Testfälle
 
+Datenbank Testen:
+
+Wir haben auf osTicket ein neues Ticket erstellt und danach mit unserem Agent Account uns angemeldet.
+In den Tickets steht das neue Ticket. Bedeutet es hat funktioniert.
+Wir haben noch in der Datenbank selbst geschaut ob es auch darin ist.
 
 ## 6. Reflexion
 Flavio:
