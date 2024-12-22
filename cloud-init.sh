@@ -350,7 +350,6 @@ EOF
 ### end ### START
 
 
-clear
 
 echo "Es kann sich nun auf das Ticketsystem verbunden werden."
 echo "webServer Public IP: $WEB_PUBLIC_IP"
