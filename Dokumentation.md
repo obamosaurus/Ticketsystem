@@ -1,126 +1,160 @@
+Gern helfe ich dabei, deine Dokumentation strukturell zu verbessern. Hier ist eine überarbeitete Version mit korrigierten Nummerierungen, verbesserten Überschriften, konsistenter Formatierung und einigen sprachlichen Anpassungen:
+
+---
+
 # Dokumentation
 
-# Inhaltsverzeichnis
+## Inhaltsverzeichnis
 1. [Projektbeschreibung](#1-projektbeschreibung)
-2. [Auswahl des Ticketsystems](#1-auswahl-des-ticketsystems)
+2. [Auswahl des Ticketsystems](#2-auswahl-des-ticketsystems)
 3. [Server Auswahl](#3-server-auswahl)
-4. [Scripts](#3-Scripts)
-5. [Vorgehen](#4-Vorgehen)
-6. [Testfälle](#5-Testfälle)
+4. [Scripts](#4-scripts)
+5. [Vorgehen](#5-vorgehen)
+6. [Testfälle](#6-testfälle)
+    - [Testfall 1: Datenbank Testen](#testfall-1-datenbank-testen)
+    - [Testfall 2: Installation von Instances, VPC und Subnetz](#testfall-2-installation-von-instances-vpc-und-subnetz)
 7. [Reflexion](#7-reflexion)
-8. [Quellenverzeichnis](#8-Quellenverzeichnis)
+8. [Quellenverzeichnis](#8-quellenverzeichnis)
 
-## 1. **Projektbeschreibung**
-Das Aufgabenstellung ist folgende:
-*Ausgangslage:*
-Die Fertigkeiten mit der Cloud prakitsch zeigen. Das Ganze können wir in einer selbstgewählten Dreiergruppe erledigen.
-*Ziele:*
-Es wurden vier Haupt ziele gesetzt. 1. Ein Service soll in der Cloud funktiontüchtig aufgesetzt werden. 2. Der Service soll als IaC (Infrastructure as Code) geestaltet sein. Die Konfigurationsdateien werden mit einer Versionsverwaltung verwaltet. 3. Die Dokumentation wir in Git via Markdown geschrieben. 4. Einzelne Testfälle sollen durchgespielt werden und mit Screenshots dokumentiert werden und in der Dokumnetation abgelegt werden.
-*Aufgabenstellung:* 
-Wir müssen ein Ticketsystem unserer Wahl installieren.
+---
 
-## 2. **Auswahl des Ticketsystems**
-Wir haben uns für osTicket entschieden.
-Dann haben wir das File heruntergeladen und als ZIP Datei ins Github gepusht.
-Daraufhin haben wir auch ein osticket-init.sh file erstellt. Dort befindet sich die Befehle um
-osTicket zu installieren. Die Datei wird in AWS unzippt und in den gewünschten Ordner geschoben,
-der durch Apache installiert werden soll. Zum schluss haben wir den Owner geändert
+## 1. Projektbeschreibung
+**Aufgabenstellung:**
+- **Ausgangslage:**
+  Die Fertigkeiten im praktischen Umgang mit der Cloud demonstrieren. Dies soll in einer selbstgewählten Dreiergruppe durchgeführt werden.
+  
+- **Ziele:**
+  1. Ein Service soll in der Cloud funktionstüchtig aufgesetzt werden.
+  2. Der Service soll als IaC (Infrastructure as Code) strukturiert sein. Die Konfigurationsdateien werden mit einer Versionsverwaltung verwaltet.
+  3. Die Dokumentation wird in Git via Markdown erstellt.
+  4. Einzelne Testfälle sollen durchgespielt, mit Screenshots dokumentiert und in der Dokumentation abgelegt werden.
+  
+- **Aufgabenstellung:**
+  Installation eines Ticketsystems unserer Wahl.
 
---Stichwörter für Text
-osticket mit zip datri installiert
-mit unzip in aws entzippen
-mit mv in den gewüschten ordner scheiben, der durch apache installiert werden sollte
-mit chown wird der Besitzer gewechselt
+---
 
-## 3. **Server Auswahl**
+## 2. Auswahl des Ticketsystems
+Wir haben uns für **osTicket** entschieden.
+
+- **Vorgehensweise:**
+  1. Das osTicket-Archiv wurde heruntergeladen und als ZIP-Datei in GitHub hochgeladen.
+  2. Ein `osticket-init.sh`-Skript wurde erstellt, das die folgenden Befehle enthält:
+      - Entpacken des osTicket-Archivs in AWS mittels `unzip`.
+      - Verschieben der entpackten Dateien in das gewünschte Verzeichnis, das von Apache bedient wird, mittels `mv`.
+      - Ändern des Besitzers des Verzeichnisses mittels `chown`.
+  
+- **Stichwörter für den Text:**
+  - osTicket mit ZIP-Datei installiert
+  - Mit `unzip` in AWS entpacken
+  - Mit `mv` in den gewünschten Ordner verschieben, der von Apache installiert werden soll
+  - Mit `chown` den Besitzer wechseln
+
+---
+
+## 3. Server Auswahl
 Wir haben uns für folgende Server entschieden:
-Webserver:  Apache
-Datenbank:  MySQL
+- **Webserver:** Apache
+- **Datenbank:** MySQL
 
-Wir haben uns für diese Server entschieden, da diese die üblichsten sind und wir damit bereits Erfahrungen gesammelt haben.
+**Begründung:**
+Diese Server sind die gängigsten und wir haben bereits Erfahrung im Umgang mit ihnen gesammelt.
+
+---
 
 ## 4. Scripts
-Wir haben uns im Team entschieden mehrere kleine Scripts zu erstellen und nicht ein grosses Script. Bei den einzelnen Scripts geht es nur um die Installation der einzelnen Server und Diensten. Die Idee dahinter ist, das wir so immer zum gleichen Setup kommen und das keine Fehler während der Installation auftauchen. In diesen Scripts ist immer in etwa der gleich Ablauf. Zuerst wird das System auf den neusten Stand gebracht und dann kommt der Befehl der den gewissen Dienst installiert. 
+Im Team haben wir uns entschieden, mehrere kleine Skripte zu erstellen, anstatt ein großes Skript. Jedes Skript ist für die Installation eines einzelnen Servers oder Dienstes zuständig. 
 
+**Vorteile:**
+- Konsistentes Setup bei jeder Installation
+- Minimierung von Fehlern während der Installation
+
+**Ablauf der Skripte:**
+1. System auf den neuesten Stand bringen.
+2. Installation des jeweiligen Dienstes mittels spezifischer Befehle.
+
+---
 
 ## 5. Vorgehen
-Wir haben für jegliche Server und Dienste eine Init.sh Datei erstellt. Dazu haben wir zuerst die Scripts erstellt und mithilfe der erstellten Scripts die Dienste Lokal installiert. Wenn etwas da schon nicht geklappt hat haben wir es direkt im Script behoben. 
-Anfangs haben wir direkt noch das README erstellt. Dort werden wir genauer beaschreiben, wie die Scripts anzuwenden sind und was diese genau machen.
-Die Dokumenatation führen wir immer fortlaufend, das wir die Dokumentation immer Up-To-Date halten können.
+1. **Erstellung der Init-Skripte:**
+   - Für jeden Server und Dienst wurde eine `init.sh`-Datei erstellt.
+   
+2. **Lokale Installation:**
+   - Die Skripte wurden lokal ausgeführt, um die Dienste zu installieren.
+   - Fehler wurden direkt im Skript behoben.
+
+3. **Dokumentation:**
+   - Ein `README` wurde erstellt, das die Anwendung und Funktion der Skripte beschreibt.
+   - Die Dokumentation wird fortlaufend aktualisiert, um stets aktuell zu bleiben.
+
+---
 
 ## 6. Testfälle
 
-Testfall 1
-Datenbank Testen: Tom Thach / Daris Bischof 22.12.2024 18:00
+### Testfall 1: Datenbank Testen
+**Durchgeführt von:** Tom Thach / Daris Bischof  
+**Datum:** 22.12.2024, 18:00
 
-Wir haben auf osTicket ein neues Ticket erstellt auf dem WebServer.
+**Durchführung:**
+1. Ein neues Ticket auf dem osTicket-Webserver erstellt.
+2. Überprüfung im Agenten-Account, ob das Ticket korrekt angezeigt wird.
 
-![Screenshot 2024-12-22 173537](https://github.com/user-attachments/assets/545bd1fd-3d1c-4393-92fe-1c679fbdd2cf)
----
-<br>
-Hier sieht man das ausgefüllte Ticket und es wurde erstellt.
+**Screenshots:**
+![Screenshot 1](https://github.com/user-attachments/assets/545bd1fd-3d1c-4393-92fe-1c679fbdd2cf)
+*Ausgefülltes und erstelltes Ticket.*
 
-![Screenshot 2024-12-22 173901](https://github.com/user-attachments/assets/cafd47d5-4cff-4779-b6b5-a9f93f5b29ca)
-![Screenshot 2024-12-22 174205](https://github.com/user-attachments/assets/69a2bf00-4947-41e0-9b49-16484b40850e)
----
-<br>
-Nachdem wir es erstellt haben, sind wir auf den Agent Account und haben darin geschaut ob das Ticket wirklich drin ist.
+![Screenshot 2](https://github.com/user-attachments/assets/cafd47d5-4cff-4779-b6b5-a9f93f5b29ca)  
+![Screenshot 3](https://github.com/user-attachments/assets/69a2bf00-4947-41e0-9b49-16484b40850e)
+*Überprüfung im Agenten-Account.*
 
-![Screenshot 2024-12-22 174218](https://github.com/user-attachments/assets/a2122c25-6bfb-4428-930a-cedb660d031a)
-![Screenshot 2024-12-22 174241](https://github.com/user-attachments/assets/89ca7697-0d63-4c53-85c7-cd88ff0de6e1)
----
-
-
-
-In den Tickets steht das neue Ticket. Bedeutet es hat funktioniert.
-Wir können es auch schliessen, eine Antwort darauf geben.
+**Fazit:**
+- Zugriff auf den Apache-Webserver mit installiertem osTicket erfolgreich.
+- Erstellung eines Tickets bestätigt die erfolgreiche Verbindung zur Datenbank und korrekte Einrichtung.
 
 ---
 
-Fazit: <br>
-Es konnte auf den Apache WebServer zugegriffen werden mit osTicket drauf. 
-Wenn man ein Ticket erstellen bedetuet das eine Verbindung zu der Datenbank erfolgreich ist und die Datenbank korrekt angelegt wurde.
+### Testfall 2: Installation von Instances, VPC und Subnetz
+**Durchführung:**
+1. Nach Fertigstellung des `cloud-init.sh`-Skripts wurden die EC2-Instances in AWS überprüft.
+
+**Screenshots:**
+![Instances](https://github.com/user-attachments/assets/a80d40b8-f5e1-4a5a-b325-6422c90c80aa)
+*Überprüfung der EC2-Instances.*
+
+2. Überprüfung der Erstellung des "AutoVPC".
+
+![VPC](https://github.com/user-attachments/assets/e413351a-9e5b-4164-85f7-da2f153b317d)
+*Erstellung des AutoVPC.*
+
+3. Überprüfung des eigenen "AutoSubnet".
+
+![Subnetz](https://github.com/user-attachments/assets/8357cd34-927c-4bee-9530-76b71e36fd33)
+*Erstellung des AutoSubnet.*
+
+**Fazit:**
+- Alle benötigten Ressourcen (Instances, VPC, Subnetz) wurden erfolgreich erstellt.
+
 ---
-
-
-Testfall 2
-Installation Instances, VPC, Subnetz
-
-Nachdem das cloud-init.sh fertig war haben wir auf der AWS ec2 Instances geschaut ob die auch erstellt wurden.
-
-![instances](https://github.com/user-attachments/assets/a80d40b8-f5e1-4a5a-b325-6422c90c80aa)
----
-<br>
-
-Danach haben wir auch geschaut das das "AutoVPC" erstellt worden ist.
-
-![vpc](https://github.com/user-attachments/assets/e413351a-9e5b-4164-85f7-da2f153b317d)
----
-<br>
-
-Zuletzt das eigene "AutoSubnet"
-
-![subnetz](https://github.com/user-attachments/assets/8357cd34-927c-4bee-9530-76b71e36fd33)
----
-
-Fazit:
-Es wurde alles erstellt und die Instances sind 
-
 
 ## 7. Reflexion
-Flavio:
+**Flavio:**
+*text*
 
+**Tom:**
+*text*
 
-Tom:
+**Daris:**
+*text*
 
-Daris:
+---
 
 ## 8. Quellenverzeichnis
-| Was   | Quelle    | Datum  |
-|--------------|--------------|--------------|
-| GBS Anleitung AWS | OneNote M364: Bash Script Befehle |  12.12.2024 |
-| GBS Anleitung AWS    | 09-AA-EC2-Instance-CLI.pdf (Aufgabenblatt von Lektion 28.11.2024) | 12.12.2024   |
-| GBS GitLab M346 | https://gbssg.gitlab.io/m346/iac-aws-cli/ | 17.12.2024 |
-| VPC und Subnetz erstellen   | https://chatgpt.com/share/67686072-4fb8-800a-9e1a-e807f45fbd2d  | 21.12.2024  |
-| Remotezugriff von webserver zu DB erlauben über gleiches subnet   | https://linuxize.com/post/mysql-remote-access/  | 21.12.2024   |
+| Was                                           | Quelle                                                                                     | Datum        |
+|-----------------------------------------------|--------------------------------------------------------------------------------------------|--------------|
+| GBS Anleitung AWS                             | OneNote M364: Bash Script Befehle                                                          | 12.12.2024   |
+| GBS Anleitung AWS                             | 09-AA-EC2-Instance-CLI.pdf (Aufgabenblatt von Lektion 28.11.2024)                        | 12.12.2024   |
+| GBS GitLab M346                               | [GBS GitLab M346](https://gbssg.gitlab.io/m346/iac-aws-cli/)                              | 17.12.2024   |
+| VPC und Subnetz erstellen                     | [ChatGPT Share](https://chatgpt.com/share/67686072-4fb8-800a-9e1a-e807f45fbd2d)           | 21.12.2024   |
+| Remotezugriff von Webserver zu DB erlauben     | [Linuxize - MySQL Remote Access](https://linuxize.com/post/mysql-remote-access/)          | 22.12.2024   |
 
+---
