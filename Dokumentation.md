@@ -7,12 +7,10 @@
 4. [Scripts](#4-scripts)
 5. [Vorgehen](#5-vorgehen)
 6. [Testfälle](#6-testfälle)
-    - [Testfall 1: Datenbank Testen](#testfall-1-datenbank-testen)
-    - [Testfall 2: Installation von Instances, VPC und Subnetz](#testfall-2-installation-von-instances-vpc-und-subnetz)
 7. [Reflexion](#7-reflexion)
 8. [Quellenverzeichnis](#8-quellenverzeichnis)
 
----
+<br>
 
 ## 1. Projektbeschreibung
 **Aufgabenstellung:**
@@ -28,7 +26,8 @@
 - **Aufgabenstellung:**
   Installation eines Ticketsystems unserer Wahl.
 
----
+
+<br><br>
 
 ## 2. Auswahl des Ticketsystems
 Wir haben uns für **osTicket** entschieden.
@@ -46,7 +45,7 @@ Wir haben uns für **osTicket** entschieden.
   - Mit `mv` in den gewünschten Ordner verschieben, der von Apache installiert werden soll
   - Mit `chown` den Besitzer wechseln
 
----
+<br><br>
 
 ## 3. Server Auswahl
 Wir haben uns für folgende Server entschieden:
@@ -56,7 +55,7 @@ Wir haben uns für folgende Server entschieden:
 **Begründung:**
 Diese Server sind die gängigsten und wir haben bereits Erfahrung im Umgang mit ihnen gesammelt.
 
----
+<br><br>
 
 ## 4. Scripts
 Im Team haben wir uns entschieden, mehrere kleine Skripte zu erstellen, anstatt ein großes Skript. Jedes Skript ist für die Installation eines einzelnen Servers oder Dienstes zuständig. 
@@ -69,7 +68,7 @@ Im Team haben wir uns entschieden, mehrere kleine Skripte zu erstellen, anstatt 
 1. System auf den neuesten Stand bringen.
 2. Installation des jeweiligen Dienstes mittels spezifischer Befehle.
 
----
+<br><br>
 
 ## 5. Vorgehen
 1. **Erstellung der Init-Skripte:**
@@ -83,7 +82,7 @@ Im Team haben wir uns entschieden, mehrere kleine Skripte zu erstellen, anstatt 
    - Ein `README` wurde erstellt, das die Anwendung und Funktion der Skripte beschreibt.
    - Die Dokumentation wird fortlaufend aktualisiert, um stets aktuell zu bleiben.
 
----
+<br><br>
 
 ## 6. Testfälle
 
@@ -96,18 +95,23 @@ Im Team haben wir uns entschieden, mehrere kleine Skripte zu erstellen, anstatt 
 2. Überprüfung im Agenten-Account, ob das Ticket korrekt angezeigt wird.
 
 **Screenshots:**
-![Screenshot 1](https://github.com/user-attachments/assets/545bd1fd-3d1c-4393-92fe-1c679fbdd2cf)
-*Ausgefülltes und erstelltes Ticket.*
+<br><br>
 
+*Ticket erstellen rechts oben*
+![Screenshot 1](https://github.com/user-attachments/assets/545bd1fd-3d1c-4393-92fe-1c679fbdd2cf)
+<br><br>
+*Ausgefülltes und erstelltes Ticket.*
 ![Screenshot 2](https://github.com/user-attachments/assets/cafd47d5-4cff-4779-b6b5-a9f93f5b29ca)  
-![Screenshot 3](https://github.com/user-attachments/assets/69a2bf00-4947-41e0-9b49-16484b40850e)
+<br>
 *Überprüfung im Agenten-Account.*
+![Screenshot 2024-12-22 174218](https://github.com/user-attachments/assets/01eae495-38c7-4d22-9bf7-942b06711142)
+
 
 **Fazit:**
 - Zugriff auf den Apache-Webserver mit installiertem osTicket erfolgreich.
 - Erstellung eines Tickets bestätigt die erfolgreiche Verbindung zur Datenbank und korrekte Einrichtung.
 
----
+<br><br>
 
 ### Testfall 2: Installation von Instances, VPC und Subnetz
 **Durchführung:**
@@ -138,7 +142,7 @@ Ich habe während dem Projekt zu jeder Zeit eine gute Kommunikation erlebt. Wir 
  
 
 **Tom:**
-*text*
+Ich finde das dieses 
 
 **Daris:**
 *text*
