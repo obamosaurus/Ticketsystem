@@ -1,7 +1,3 @@
-Gern helfe ich dabei, deine Dokumentation strukturell zu verbessern. Hier ist eine überarbeitete Version mit korrigierten Nummerierungen, verbesserten Überschriften, konsistenter Formatierung und einigen sprachlichen Anpassungen:
-
----
-
 # Dokumentation
 
 ## Inhaltsverzeichnis
