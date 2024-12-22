@@ -28,5 +28,3 @@ cd /var/www/html/include/
 sudo cp ost-sampleconfig.php /var/www/html/include/ost-config.php
 sudo chmod 0666 ost-config.php
 
-# Installation benötigter services für osTicket
-sudo apt install -y php-mysql
